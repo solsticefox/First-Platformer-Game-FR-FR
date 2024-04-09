@@ -3,6 +3,7 @@
 #include <SDL_image.h>
 #include "RenderWindow.hpp"
 #include "Entity.hpp"
+#include <vector>
 
 int main(int argc, char* argv[]) {
 	if (SDL_Init(SDL_INIT_VIDEO) > 0)
@@ -19,7 +20,16 @@ int main(int argc, char* argv[]) {
 
 	SDL_Texture* grassTexture = window.loadTexture("Assets/ground_grass_1.png");
 
-	Entity platform0(10, 10, grassTexture);
+
+	std::vector<Entity> entities = { Entity(0, 0, grassTexture),
+									  Entity(30, 0, grassTexture),
+									  Entity(30,30,grassTexture) };
+
+	{
+		Entity wilson(100, 50, grassTexture);
+
+		entities.push_back(wilson);
+	}
 
 
 
@@ -38,7 +48,12 @@ int main(int argc, char* argv[]) {
 		}
 
 		window.clear();
-		window.render(platform0);
+
+		for (Entity& e : entities)
+		{
+			window.render(e);
+		}
+
 		window.display();
 	}
 
