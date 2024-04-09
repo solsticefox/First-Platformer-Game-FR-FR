@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include "RenderWindow.hpp"
+#include "Entity.hpp"
 
 int main(int argc, char* argv[]) {
 	if (SDL_Init(SDL_INIT_VIDEO) > 0)
@@ -18,6 +19,10 @@ int main(int argc, char* argv[]) {
 
 	SDL_Texture* grassTexture = window.loadTexture("Assets/ground_grass_1.png");
 
+	Entity platform0(10, 10, grassTexture);
+
+
+
 	bool gameRunning = true;
 
 	SDL_Event event;
@@ -33,7 +38,7 @@ int main(int argc, char* argv[]) {
 		}
 
 		window.clear();
-		window.render(grassTexture);
+		window.render(platform0);
 		window.display();
 	}
 
