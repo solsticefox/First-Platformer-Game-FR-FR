@@ -1,4 +1,6 @@
 #include <iostream>
+#include <SDL.h>
+#include <SDL_image.h>
 #include "RenderWindow.hpp"
 
 int main(int argc, char* argv[]) {
@@ -13,6 +15,30 @@ int main(int argc, char* argv[]) {
 	}
 
 	RenderWindow window("Game v1.0", 1280, 720);
+
+	SDL_Texture* grassTexture = window.loadTexture("Assets/ground_grass_1.png");
+
+	bool gameRunning = true;
+
+	SDL_Event event;
+
+	while (gameRunning)
+	{
+		while (SDL_PollEvent(&event))
+		{
+			if (event.type == SDL_QUIT)
+			{
+				gameRunning = false;
+			}
+		}
+
+		window.clear();
+		window.render(grassTexture);
+		window.display();
+	}
+
+	window.cleanup();
+	SDL_Quit();
 
 	return 0;
 }

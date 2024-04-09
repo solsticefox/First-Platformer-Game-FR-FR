@@ -145,6 +145,10 @@
   <ItemGroup>
     <ClInclude Include="RenderWindow.hpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\ground_grass_1.png" />
+    <Image Include="Assets\hulking_knight.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
