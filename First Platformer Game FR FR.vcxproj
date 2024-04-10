@@ -141,10 +141,12 @@
   <ItemGroup>
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="math.cpp" />
     <ClCompile Include="renderwindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity.hpp" />
+    <ClInclude Include="Math.hpp" />
     <ClInclude Include="RenderWindow.hpp" />
   </ItemGroup>
   <ItemGroup>
