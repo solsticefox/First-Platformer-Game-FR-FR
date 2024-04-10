@@ -3,10 +3,12 @@
 #include <SDL_image.h>
 #include "Math.hpp"
 
+#define UNIT 32
+
 class Entity
 {
 public:
-	Entity(Vector2f p_pos, SDL_Texture* p_tex);
+	Entity(Vector2f p_pos, SDL_Texture* p_tex, int width = UNIT, int height = UNIT);
 	Vector2f& getPos()
 	{
 		return pos;

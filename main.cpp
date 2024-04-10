@@ -19,17 +19,21 @@ int main(int argc, char* argv[]) {
 
 	RenderWindow window("Game v1.0", 1280, 720);
 
-	SDL_Texture* grassTexture = window.loadTexture("Assets/ground_grass_1.png");
+	SDL_Texture* grassTexture = window.loadTexture("Assets/grass.png");
+	SDL_Texture* dirtTexture = window.loadTexture("Assets/dirt.png");
+	SDL_Texture* platformTexture = window.loadTexture("Assets/platform.png");
+	SDL_Texture* hitboxTexture = window.loadTexture("Assets/hitbox.png");
+	SDL_Texture* playerTexture = window.loadTexture("Assets/player.png");
 
 
 	std::vector<Entity> entities = { Entity(Vector2f(0, 0), grassTexture),
-									  Entity(Vector2f(30, 0), grassTexture),
-									  Entity(Vector2f(30,30),grassTexture) };
+									  Entity(Vector2f(1, 0), hitboxTexture),
+									  Entity(Vector2f(1,1),platformTexture) };
 
 	{
-		Entity wilson(Vector2f(100, 50), grassTexture);
+		Entity billy(Vector2f(10, 50), playerTexture, 190, 96);
 
-		entities.push_back(wilson);
+		entities.push_back(billy);
 	}
 
 

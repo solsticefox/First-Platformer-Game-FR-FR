@@ -4,6 +4,8 @@
 #include <SDL_image.h>
 #include "Entity.hpp"
 
+#define UNIT 32
+
 RenderWindow::RenderWindow(const char* p_title, int p_w, int p_h)
 	:window(NULL), renderer(NULL)
 {
@@ -49,10 +51,10 @@ void RenderWindow::render(Entity& p_entity)
 	src.h = p_entity.getCurrentFrame().h;
 
 	SDL_Rect dst;
-	dst.x = p_entity.getPos().xvec * 4;
-	dst.y = p_entity.getPos().yvec * 4;
-	dst.w = p_entity.getCurrentFrame().w * 4;
-	dst.h = p_entity.getCurrentFrame().h * 4;
+	dst.x = p_entity.getPos().xvec * UNIT;
+	dst.y = p_entity.getPos().yvec * UNIT;
+	dst.w = p_entity.getCurrentFrame().w;
+	dst.h = p_entity.getCurrentFrame().h;
 
 	SDL_RenderCopy(renderer, p_entity.getTex(), &src, &dst);
 }
