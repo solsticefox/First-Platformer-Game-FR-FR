@@ -4,6 +4,7 @@
 #include "RenderWindow.hpp"
 #include "Entity.hpp"
 #include <vector>
+#include "Utils.hpp"
 
 int main(int argc, char* argv[]) {
 	if (SDL_Init(SDL_INIT_VIDEO) > 0)
@@ -35,17 +36,36 @@ int main(int argc, char* argv[]) {
 
 	bool gameRunning = true;
 
+	const float timeStep = 0.01f;
+	float accumulator = 0.0f;
+	float currentTime = utils::hireTimeInSeconds();
+
 	SDL_Event event;
 
 	while (gameRunning)
 	{
-		while (SDL_PollEvent(&event))
-		{
-			if (event.type == SDL_QUIT)
+		int startTick = SDL_GetTicks();
+		float newTime = utils::hireTimeInSeconds();
+		float frameTime = newTime - currentTime;
+		
+		currentTime = newTime;
+
+		accumulator += frameTime;
+
+		while (accumulator >= timeStep) {
+
+			while (SDL_PollEvent(&event))
 			{
-				gameRunning = false;
+				if (event.type == SDL_QUIT)
+				{
+					gameRunning = false;
+				}
 			}
+			accumulator -= timeStep;
+
 		}
+
+		const float alpha = accumulator / timeStep;
 
 		window.clear();
 
@@ -55,6 +75,12 @@ int main(int argc, char* argv[]) {
 		}
 
 		window.display();
+
+		int frameTicks = SDL_GetTicks() - startTick;
+
+		if (frameTicks < 1000 / window.getRefreshRate())
+			SDL_Delay(1000 / window.getRefreshRate() - frameTicks);
+		
 	}
 
 	window.cleanup();

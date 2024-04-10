@@ -14,6 +14,7 @@ public:
 	void clear();
 	void render(Entity& p_entity);
 	void display();
+	int getRefreshRate();
 
 private:
 	SDL_Window* window;
