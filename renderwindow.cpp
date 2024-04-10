@@ -71,3 +71,8 @@ int RenderWindow::getRefreshRate()
 	SDL_GetDisplayMode(displayIndex, 0, &mode);
 	return mode.refresh_rate;
 }
+
+SDL_Renderer* RenderWindow::getRenderer()
+{
+	return renderer;
+}

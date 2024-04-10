@@ -5,6 +5,9 @@
 #include "Entity.hpp"
 #include <vector>
 #include "Utils.hpp"
+#include "Map.hpp"
+#include <fstream>
+
 
 int main(int argc, char* argv[]) {
 	if (SDL_Init(SDL_INIT_VIDEO) > 0)
@@ -24,18 +27,19 @@ int main(int argc, char* argv[]) {
 	SDL_Texture* platformTexture = window.loadTexture("Assets/platform.png");
 	SDL_Texture* hitboxTexture = window.loadTexture("Assets/hitbox.png");
 	SDL_Texture* playerTexture = window.loadTexture("Assets/player.png");
+	SDL_Texture* skyTexture = window.loadTexture("Assets/sky.png");
 
+	//Render map here
+	Map lvl1("Assets/lvlmap.txt");
+	lvl1.addTerrain(skyTexture);
+	lvl1.addTerrain(grassTexture);
+	lvl1.addTerrain(dirtTexture);
+	lvl1.addTerrain(platformTexture);
 
-	std::vector<Entity> entities = { Entity(Vector2f(0, 0), grassTexture),
-									  Entity(Vector2f(1, 0), hitboxTexture),
-									  Entity(Vector2f(1,1),platformTexture) };
+	
+	Entity billy(Vector2f(5, 5), playerTexture, 60, 100);
 
-	{
-		Entity billy(Vector2f(10, 50), playerTexture, 190, 96);
-
-		entities.push_back(billy);
-	}
-
+	
 
 
 	bool gameRunning = true;
@@ -70,13 +74,11 @@ int main(int argc, char* argv[]) {
 		}
 
 		const float alpha = accumulator / timeStep;
-
+		billy.getPos().xvec+=0.01;
 		window.clear();
 
-		for (Entity& e : entities)
-		{
-			window.render(e);
-		}
+		lvl1.renderMap(window.getRenderer());
+		window.render(billy);
 
 		window.display();
 
