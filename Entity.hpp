@@ -15,6 +15,7 @@ public:
 	}
 	SDL_Texture* getTex();
 	SDL_Rect getCurrentFrame();
+	void setCurrentFrame(int x, int y);
 	
 
 private:

@@ -24,3 +24,9 @@ SDL_Rect Entity::getCurrentFrame()
 {
 	return currentFrame;
 }
+
+void Entity::setCurrentFrame(int x, int y)
+{
+	currentFrame.x = x;
+	currentFrame.y = y;
+}

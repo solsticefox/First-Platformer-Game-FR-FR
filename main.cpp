@@ -37,7 +37,7 @@ int main(int argc, char* argv[]) {
 	lvl1.addTerrain(platformTexture);
 
 	
-	Entity billy(Vector2f(5, 5), playerTexture, 60, 100);
+	Entity billy(Vector2f(5, 5), playerTexture, 64, 96);
 
 	
 
@@ -52,6 +52,7 @@ int main(int argc, char* argv[]) {
 	int yvelocity = 0;
 	int xvelocity = 0;
 	int gravity = 1;
+	Uint32 aniTick = 0;
 
 	while (gameRunning)
 	{
@@ -146,6 +147,17 @@ int main(int argc, char* argv[]) {
 		{
 			billy.getPos().xvec = 1280;
 		}
+		if (billy.getCurrentFrame().x == 0&&(SDL_GetTicks()-aniTick)>1000)
+		{
+			billy.setCurrentFrame(64, 0);
+			aniTick = SDL_GetTicks();
+		}
+		else if(billy.getCurrentFrame().x == 64&& (SDL_GetTicks() - aniTick) > 1000)
+		{
+			billy.setCurrentFrame(0, 0);
+			aniTick = SDL_GetTicks();
+		}
+
 		window.clear();
 
 		lvl1.renderMap(window.getRenderer());
