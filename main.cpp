@@ -49,6 +49,9 @@ int main(int argc, char* argv[]) {
 	float currentTime = utils::hireTimeInSeconds();
 
 	SDL_Event event;
+	int yvelocity = 0;
+	int xvelocity = 0;
+	int gravity = 1;
 
 	while (gameRunning)
 	{
@@ -60,13 +63,61 @@ int main(int argc, char* argv[]) {
 
 		accumulator += frameTime;
 
-		while (accumulator >= timeStep) {
+		while (accumulator >= timeStep) 
+		{
 
 			while (SDL_PollEvent(&event))
 			{
-				if (event.type == SDL_QUIT)
+				switch (event.type)
 				{
+				case SDL_QUIT:
 					gameRunning = false;
+					break;
+				case SDL_KEYDOWN:
+					switch (event.key.keysym.sym)
+					{
+					case SDLK_w:
+						yvelocity = 25;
+						break;
+					case SDLK_s:
+						yvelocity = -10;
+						break;
+					case SDLK_d:
+						xvelocity = 10;
+						break;
+					case SDLK_a:
+						xvelocity = -10;
+						break;
+					case SDLK_q:
+						gameRunning = false;
+						break;
+					default:
+						break;
+					}
+					break;
+				case SDL_KEYUP:
+					switch (event.key.keysym.sym)
+					{
+						switch (event.key.keysym.sym)
+						{
+						case SDLK_w:
+							yvelocity = 0;
+							break;
+						case SDLK_s:
+							yvelocity = 0;
+							break;
+						case SDLK_d:
+							xvelocity = 0;
+							break;
+						case SDLK_a:
+							xvelocity = 0;
+							break;
+						}
+					}
+					break;
+				default:
+					break;
+				
 				}
 			}
 			accumulator -= timeStep;
@@ -74,7 +125,32 @@ int main(int argc, char* argv[]) {
 		}
 
 		const float alpha = accumulator / timeStep;
-		billy.getPos().xvec+=0.01;
+		billy.getPos().yvec -= yvelocity;
+		billy.getPos().xvec += xvelocity;
+		if (billy.getPos().yvec > 600)
+		{
+			billy.getPos().yvec = 600;
+		}
+		if (billy.getPos().yvec < 600)
+		{
+			yvelocity -= gravity;
+		}
+		if (billy.getPos().yvec == 600)
+		{
+			yvelocity = 0;
+		}
+		if (billy.getPos().yvec < 0)
+		{
+			billy.getPos().yvec = 0;
+		}
+		if (billy.getPos().xvec < 0) {
+			billy.getPos().xvec = 0;
+		}
+		if (billy.getPos().xvec > 1280)
+		{
+			billy.getPos().xvec = 1280;
+		}
+		std::cout << billy.getPos().xvec << ", " << billy.getPos().yvec << std::endl;
 		window.clear();
 
 		lvl1.renderMap(window.getRenderer());
