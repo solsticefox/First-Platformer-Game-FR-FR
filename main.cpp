@@ -98,26 +98,22 @@ int main(int argc, char* argv[]) {
 				case SDL_KEYUP:
 					switch (event.key.keysym.sym)
 					{
-						switch (event.key.keysym.sym)
-						{
-						case SDLK_w:
-							yvelocity = 0;
-							break;
-						case SDLK_s:
-							yvelocity = 0;
-							break;
-						case SDLK_d:
-							xvelocity = 0;
-							break;
-						case SDLK_a:
-							xvelocity = 0;
-							break;
-						}
+					case SDLK_w:
+						yvelocity = 0;
+						break;
+					case SDLK_s:
+						yvelocity = 0;
+						break;
+					case SDLK_d:
+						xvelocity = 0;
+						break;		
+					case SDLK_a:
+						xvelocity = 0;
+						break;
+					default:
+						break;
 					}
 					break;
-				default:
-					break;
-				
 				}
 			}
 			accumulator -= timeStep;
@@ -150,7 +146,6 @@ int main(int argc, char* argv[]) {
 		{
 			billy.getPos().xvec = 1280;
 		}
-		std::cout << billy.getPos().xvec << ", " << billy.getPos().yvec << std::endl;
 		window.clear();
 
 		lvl1.renderMap(window.getRenderer());
