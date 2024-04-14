@@ -2,25 +2,21 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include "Math.hpp"
+#include "Managers.hpp"
 
 #define UNIT 32
 
+//Declare the manager
 class Entity
 {
-public:
-	Entity(Vector2f p_pos, SDL_Texture* p_tex, int width = UNIT, int height = UNIT);
-	Vector2f& getPos()
-	{
-		return pos;
-	}
-	SDL_Texture* getTex();
-	SDL_Rect getCurrentFrame();
-	void setCurrentFrame(int x, int y);
-	
-
 private:
-	Vector2f pos;
-	SDL_Rect currentFrame;
-	SDL_Texture* tex;
-
+	static int nextid;
+	static EntityManager emanager;
+public:
+	Entity() : ENTID(nextid++) {
+		emanager.addToEntities(ENTID);
+	}
+	int ENTID;
 };
+
+int Entity::nextid = 0;

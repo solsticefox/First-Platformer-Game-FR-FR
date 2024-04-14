@@ -50,7 +50,7 @@ void Map::renderMap(SDL_Renderer* ren)
 	SDL_Rect mdst;
 	mdst.w = 32;
 	mdst.h = 32;
-	SDL_Texture* cTex = IMG_LoadTexture(ren, "Assets/grass.png");
+	SDL_Texture* cTex;
 	for (int x = 0; x < numColumns; x++)
 	{
 		for (int y = 0; y < numRows; y++)

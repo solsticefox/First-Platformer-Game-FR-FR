@@ -12,7 +12,6 @@ public:
 	SDL_Texture* loadTexture(const char* p_filePath);
 	void cleanup();
 	void clear();
-	void render(Entity& p_entity);
 	void display();
 	int getRefreshRate();
 	SDL_Renderer* getRenderer();
