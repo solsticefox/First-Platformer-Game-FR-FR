@@ -30,3 +30,13 @@ void Entity::setCurrentFrame(int x, int y)
 	currentFrame.x = x;
 	currentFrame.y = y;
 }
+
+void Entity::addBox(int t, int b, int r, int l)
+{
+	entBox = new BOX(t, b, r, l);
+}
+
+void Entity::addVelocity()
+{
+	entVel = new Velocity(0, 0);
+}

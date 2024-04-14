@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include "Math.hpp"
+#include "Components.hpp"
 
 #define UNIT 32
 
@@ -16,7 +17,10 @@ public:
 	SDL_Texture* getTex();
 	SDL_Rect getCurrentFrame();
 	void setCurrentFrame(int x, int y);
-	
+	BOX* entBox = nullptr;
+	void addBox(int t, int b, int r, int l);
+	Velocity* entVel = nullptr;
+	void addVelocity();
 
 private:
 	Vector2f pos;
