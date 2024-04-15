@@ -18,9 +18,10 @@ public:
 	SDL_Rect getCurrentFrame();
 	void setCurrentFrame(int x, int y);
 	BOX* entBox = nullptr;
-	void addBox(int t, int b, int r, int l);
+	void addBox(int t = 0, int b = 0, int r = 0, int l = 0);
 	Velocity* entVel = nullptr;
 	void addVelocity();
+	void setEntBox();
 
 private:
 	Vector2f pos;

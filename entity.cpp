@@ -40,3 +40,8 @@ void Entity::addVelocity()
 {
 	entVel = new Velocity(0, 0);
 }
+
+void Entity::setEntBox()
+{
+	entBox->updateBox(getPos().yvec, getPos().yvec + getCurrentFrame().h, getPos().xvec + getCurrentFrame().w, getPos().xvec);
+}

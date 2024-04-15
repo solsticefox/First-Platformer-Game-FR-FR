@@ -36,10 +36,11 @@ int main(int argc, char* argv[]) {
 	lvl1.addTerrain(dirtTexture);
 	lvl1.addTerrain(platformTexture);
 
-	
+	Entity block(Vector2f(196, 512), platformTexture);
+	block.addBox();
 	Entity billy(Vector2f(5, 5), playerTexture, 64, 96);
-
-	
+	billy.addVelocity();
+	billy.addBox(billy.getPos().yvec, billy.getPos().yvec + billy.getCurrentFrame().h, billy.getPos().xvec + billy.getCurrentFrame().w, billy.getPos().xvec);
 
 
 	bool gameRunning = true;
@@ -49,8 +50,6 @@ int main(int argc, char* argv[]) {
 	float currentTime = utils::hireTimeInSeconds();
 
 	SDL_Event event;
-	int yvelocity = 0;
-	int xvelocity = 0;
 	int gravity = 1;
 	Uint32 aniTick = 0;
 
@@ -78,16 +77,16 @@ int main(int argc, char* argv[]) {
 					switch (event.key.keysym.sym)
 					{
 					case SDLK_w:
-						yvelocity = 25;
+						billy.entVel->velocity.yvec = 25;
 						break;
 					case SDLK_s:
-						yvelocity = -10;
+						billy.entVel->velocity.yvec = -10;
 						break;
 					case SDLK_d:
-						xvelocity = 10;
+						billy.entVel->velocity.xvec = 10;
 						break;
 					case SDLK_a:
-						xvelocity = -10;
+						billy.entVel->velocity.xvec = -10;
 						break;
 					case SDLK_q:
 						gameRunning = false;
@@ -100,16 +99,16 @@ int main(int argc, char* argv[]) {
 					switch (event.key.keysym.sym)
 					{
 					case SDLK_w:
-						yvelocity = 0;
+						billy.entVel->velocity.yvec = 0;
 						break;
 					case SDLK_s:
-						yvelocity = 0;
+						billy.entVel->velocity.yvec = 0;
 						break;
 					case SDLK_d:
-						xvelocity = 0;
+						billy.entVel->velocity.xvec = 0;
 						break;		
 					case SDLK_a:
-						xvelocity = 0;
+						billy.entVel->velocity.xvec = 0;
 						break;
 					default:
 						break;
@@ -122,19 +121,25 @@ int main(int argc, char* argv[]) {
 		}
 
 		const float alpha = accumulator / timeStep;
-		billy.getPos().yvec -= yvelocity;
-		billy.getPos().xvec += xvelocity;
+		billy.setEntBox();
+		billy.getPos().yvec -= billy.entVel->velocity.yvec;
+		billy.getPos().xvec += billy.entVel->velocity.xvec;
+		block.setEntBox();
+		
+		if (billy.entBox->checkCollision(*billy.entBox, *block.entBox) == 1)
+			std::cout << "Collision detected" << std::endl;
+
 		if (billy.getPos().yvec > 600)
 		{
 			billy.getPos().yvec = 600;
 		}
 		if (billy.getPos().yvec < 600)
 		{
-			yvelocity -= gravity;
+			billy.entVel->velocity.yvec -= gravity;
 		}
 		if (billy.getPos().yvec == 600)
 		{
-			yvelocity = 0;
+			billy.entVel->velocity.yvec = 0;
 		}
 		if (billy.getPos().yvec < 0)
 		{
@@ -162,6 +167,7 @@ int main(int argc, char* argv[]) {
 
 		lvl1.renderMap(window.getRenderer());
 		window.render(billy);
+		window.render(block);
 
 		window.display();
 
