@@ -9,6 +9,13 @@
 #include <fstream>
 
 
+void createBlock(float x, float y, std::vector<Entity>& blocks, SDL_Texture* tex)
+{
+	Entity blockT(Vector2f(x, y), tex);
+	blockT.addBox();
+	blocks.push_back(blockT);
+}
+
 int main(int argc, char* argv[]) {
 	if (SDL_Init(SDL_INIT_VIDEO) > 0)
 	{
@@ -36,8 +43,17 @@ int main(int argc, char* argv[]) {
 	lvl1.addTerrain(dirtTexture);
 	lvl1.addTerrain(platformTexture);
 
-	Entity block(Vector2f(196, 512), platformTexture);
-	block.addBox();
+	std::vector<Entity> blocks;
+
+	createBlock(196, 512, blocks, platformTexture);
+
+	createBlock(256, 512, blocks, platformTexture);
+
+	createBlock(228, 512, blocks, platformTexture);
+	Entity block3(Vector2f(228, 512), platformTexture);
+	block3.addBox();
+	blocks.push_back(block3);
+
 	Entity billy(Vector2f(5, 5), playerTexture, 64, 96);
 	billy.addVelocity();
 	billy.addBox();
@@ -126,33 +142,38 @@ int main(int argc, char* argv[]) {
 		billy.setEntBox();
 		billy.getPos().yvec -= billy.entVel->velocity.yvec;
 		billy.getPos().xvec += billy.entVel->velocity.xvec;
-		block.setEntBox();
-		
-		collider = billy.entBox->checkCollision(*billy.entBox, *block.entBox);
-
-		switch (collider)
+		for (auto& block : blocks)
 		{
-		case 1:
-			billy.entVel->velocity.xvec = 0;
-			billy.getPos().xvec = block.getPos().xvec - billy.getCurrentFrame().w;
-			break;
-		case 2:
-			billy.entVel->velocity.xvec = 0;
-			billy.getPos().xvec = block.getPos().xvec + block.getCurrentFrame().w;
-			break;
-		case 3:
-			gravity = 0;
-			billy.entVel->velocity.yvec = 0;
-			billy.getPos().yvec = block.getPos().yvec + block.getCurrentFrame().h;
-			break;
-		case 4:
-			gravity = 0;
-			billy.entVel->velocity.yvec = 0;
-			billy.getPos().yvec = block.getPos().yvec - billy.getCurrentFrame().h;
-			break;
-		default:
-			gravity = 1;
-			break;
+			block.setEntBox();
+		}
+
+		for (auto& block : blocks)
+		{
+			collider = billy.entBox->checkCollision(*billy.entBox, *block.entBox);
+			switch (collider)
+			{
+			case 1:
+				billy.entVel->velocity.xvec = 0;
+				billy.getPos().xvec = block.getPos().xvec - billy.getCurrentFrame().w;
+				break;
+			case 2:
+				billy.entVel->velocity.xvec = 0;
+				billy.getPos().xvec = block.getPos().xvec + block.getCurrentFrame().w;
+				break;
+			case 3:
+				gravity = 0;
+				billy.entVel->velocity.yvec = 0;
+				billy.getPos().yvec = block.getPos().yvec + block.getCurrentFrame().h;
+				break;
+			case 4:
+				gravity = 0;
+				billy.entVel->velocity.yvec = 0;
+				billy.getPos().yvec = block.getPos().yvec - billy.getCurrentFrame().h;
+				break;
+			default:
+				gravity = 1;
+				break;
+			}
 		}
 
 		if (billy.getPos().yvec > 600)
@@ -193,7 +214,10 @@ int main(int argc, char* argv[]) {
 
 		lvl1.renderMap(window.getRenderer());
 		window.render(billy);
-		window.render(block);
+		for (auto& block : blocks)
+		{
+			window.render(block);
+		}
 
 		window.display();
 
