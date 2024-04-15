@@ -8,6 +8,7 @@
 #include "Map.hpp"
 #include <fstream>
 
+#define UNIT 32
 
 void createBlock(float x, float y, std::vector<Entity>& blocks, SDL_Texture* tex)
 {
@@ -45,14 +46,35 @@ int main(int argc, char* argv[]) {
 
 	std::vector<Entity> blocks;
 
-	createBlock(196, 512, blocks, platformTexture);
+	createBlock(6*UNIT, 16*UNIT, blocks, platformTexture);
 
-	createBlock(256, 512, blocks, platformTexture);
+	createBlock(7*UNIT, 16*UNIT, blocks, platformTexture);
 
-	createBlock(228, 512, blocks, platformTexture);
-	Entity block3(Vector2f(228, 512), platformTexture);
-	block3.addBox();
-	blocks.push_back(block3);
+	createBlock(8*UNIT, 16*UNIT, blocks, platformTexture);
+
+	createBlock(12 * UNIT, 10 * UNIT, blocks, platformTexture);
+
+	createBlock(13 * UNIT, 10 * UNIT, blocks, platformTexture);
+
+	createBlock(14 * UNIT, 10 * UNIT, blocks, platformTexture);
+
+	createBlock(18 * UNIT, 13 * UNIT, blocks, platformTexture);
+
+	createBlock(19 * UNIT, 13 * UNIT, blocks, platformTexture);
+
+	createBlock(20 * UNIT, 13 * UNIT, blocks, platformTexture);
+
+	createBlock(23 * UNIT, 18 * UNIT, blocks, platformTexture);
+
+	createBlock(24 * UNIT, 18 * UNIT, blocks, platformTexture);
+
+	createBlock(25 * UNIT, 18 * UNIT, blocks, platformTexture);
+
+	createBlock(30 * UNIT, 8 * UNIT, blocks, platformTexture);
+
+	createBlock(31 * UNIT, 8 * UNIT, blocks, platformTexture);
+
+	createBlock(32 * UNIT, 8 * UNIT, blocks, platformTexture);
 
 	Entity billy(Vector2f(5, 5), playerTexture, 64, 96);
 	billy.addVelocity();
@@ -168,7 +190,7 @@ int main(int argc, char* argv[]) {
 			case 4:
 				gravity = 0;
 				billy.entVel->velocity.yvec = 0;
-				billy.getPos().yvec = block.getPos().yvec - billy.getCurrentFrame().h;
+				billy.getPos().yvec = block.getPos().yvec - billy.getCurrentFrame().h-5;
 				break;
 			default:
 				gravity = 1;

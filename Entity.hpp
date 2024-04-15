@@ -3,6 +3,7 @@
 #include <SDL_image.h>
 #include "Math.hpp"
 #include "Components.hpp"
+#include <vector>
 
 #define UNIT 32
 
@@ -29,3 +30,5 @@ private:
 	SDL_Texture* tex;
 
 };
+
+
