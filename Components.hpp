@@ -16,12 +16,21 @@ public:
 	}
 
 	
-	bool checkCollision(BOX box1, BOX box2)
+	int checkCollision(BOX box1, BOX box2)
 	{
-		bool check = false;
+		int check = 0;
+		int bHor = (box1.bottom + box1.top) / 2;
+		int bVer = (box1.left + box1.right) / 2;
+		if (bHor<box2.bottom&&bHor>box2.top&&box1.right<box2.right&&box1.right>box2.left)
+			check = 1; //Right edge collision
+		if (bHor<box2.bottom && bHor>box2.top && box1.left<box2.right && box1.left>box2.left)
+			check = 2; //Left edge collision
+		if (bVer > box2.left && bVer < box2.right && box1.top<box2.bottom && box1.bottom>box2.bottom)
+			check = 3; //Top edge collision
+		if (bVer > box2.left && bVer < box2.right && box1.bottom>box2.top && box1.bottom < box2.bottom)
+			check = 4;	//Bottom edge collision
 
-		if (box1.bottom<box2.bottom&&box1.bottom>box2.top&&box1.right<box2.right)
-			check = true;
+
 		return check;
 	}
 
